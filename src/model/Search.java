@@ -20,48 +20,36 @@ public class Search {
 	}
 
 	protected static String buscarNombreSinPar(String[] nombres) {
-		int pos = tienePar(nombres, 0, nombres.length - 1);
+		int middle = (nombres.length - 2) / 2;
+		if (middle % 2 != 0) {
+			middle += 1;
+		}
 
-		return nombres[pos];
+		return tienePar(nombres, 0, nombres.length - 2, middle);
 	}
 
-	protected static int tienePar(String[] nombres, int i, int j) {
-		int izq;
-		int der;
-		int m = (i + j) / 2;
-
-		if (i == j) {
-			boolean is = false;
-			if ((i + 1) <= nombres.length - 1) {
-				if (nombres[i].equalsIgnoreCase(nombres[i + 1])) {
-					is = true;
-				}
-			}
-
-			if ((i - 1) >= 0) {
-				if (nombres[i].equalsIgnoreCase(nombres[i - 1])) {
-					is = true;
-				}
-			}
-
-			if (is == false) {
-				return i;
+	public static String tienePar(String[] nombres, int low, int high, int middle) {
+		if (high - low == 1) {
+			if (nombres[low].equals(nombres[high])) {
+				return nombres[high + 1];
 			} else {
-				return -1;
+				return nombres[low];
 			}
 		} else {
-			izq = tienePar(nombres, i, m);
-
-			der = tienePar(nombres, m + 1, j);
-
-			if (izq == -1 && der == -1) {
-				return -1;
-			} else {
-				if (izq != -1) {
-					return izq;
-				} else {
-					return der;
+			if (nombres[middle].equals(nombres[middle + 1])) { // RIGHT
+				low = middle;
+				middle = ((high - low) / 2) + low;
+				if (!((high - middle) == 1) && middle % 2 != 0) {
+					middle += 1;
 				}
+				return tienePar(nombres, low, high, middle);
+			} else { // LEFT
+				high = middle - 1;
+				middle = ((high - low) / 2) + low;
+				if (middle % 2 != 0) {
+					middle += 1;
+				}
+				return tienePar(nombres, low, high, middle);
 			}
 		}
 	}
