@@ -36,14 +36,14 @@ public class Search {
 				return nombres[low];
 			}
 		} else {
-			if (nombres[middle].equals(nombres[middle + 1])) { // RIGHT
+			if (nombres[middle].equals(nombres[middle + 1])) {
 				low = middle;
 				middle = ((high - low) / 2) + low;
 				if (!((high - middle) == 1) && middle % 2 != 0) {
 					middle += 1;
 				}
 				return tienePar(nombres, low, high, middle);
-			} else { // LEFT
+			} else {
 				high = middle - 1;
 				middle = ((high - low) / 2) + low;
 				if (middle % 2 != 0) {
